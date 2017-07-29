@@ -19,12 +19,12 @@
 import UIKit
 
 // Let's use Swift's new error handling...
-enum FibError : ErrorType {
+enum FibError : Error {
     case NumberIsYUGE
     case NumberIsTooSmall
 }
 
-func fibonacci(iterations:Int) throws {
+func fibonacci(_ iterations:Int) throws {
     
     var count = 0       // Store the current iteration count
     var lastNum = 0     // The previous number value...
@@ -35,9 +35,9 @@ func fibonacci(iterations:Int) throws {
     }
     
     // Use recursion with Swift's inner functions to iterate the fibonacci sequence...
-    func sequence(n:Int) throws {
+    func sequence(_ n:Int) throws {
         
-        count = count + 1   // Swift 3.0 is removing the ++ operator...
+        count += 1   // Swift 3.0 is removing the ++ operator...
         // need to use var = var + 1
         
         // Are we done?
@@ -71,7 +71,7 @@ func fibonacci(iterations:Int) throws {
 // Now let's try out our Fibonacci function...
 do {
     
-    try fibonacci(10)  // Try 10 iterations...(change it to a large value 
+    try fibonacci(10)  // Try 10 iterations...(change it to a large value
                        // or negative value to test the error handling)
     
 } catch FibError.NumberIsYUGE {     // This is way more graceful than letting it crap out...
