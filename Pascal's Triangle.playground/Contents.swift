@@ -21,12 +21,12 @@
 import UIKit
 
 // Let's use Swift's new error handling...
-enum PascalError : ErrorType {
+enum PascalError : Error {
     case NumberIsYUGE
     case NumberIsTooSmall
 }
 
-func pascal(iterations:Int) throws {
+func pascal(_ iterations:Int) throws {
     
     if (iterations <= 0) {
         throw PascalError.NumberIsTooSmall
