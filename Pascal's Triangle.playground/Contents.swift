@@ -33,14 +33,10 @@ func pascal(_ iterations:Int) throws {
     }
     
     print("1")
-    if (iterations == 1) {
-        return
-    }
+    if (iterations == 1) { return }
     
     print("1, 1")
-    if (iterations == 2) {
-        return
-    }
+    if (iterations == 2) { return }
     
     var currentRow = [1, 1] // For iterations of 3 or more, we'll use our algorithm...
     for _ in (3...iterations) {
@@ -51,7 +47,7 @@ func pascal(_ iterations:Int) throws {
         // Run through the currentRow, add the value at the
         // current rowIndex to the value at the next index...
         for rowIndex in 0..<(currentRow.count - 1) {
-            let result = Int.addWithOverflow(currentRow[rowIndex], currentRow[rowIndex + 1])
+            let result = currentRow[rowIndex].addingReportingOverflow(currentRow[rowIndex + 1])
             if (result.overflow) {
                 throw PascalError.NumberIsYUGE
             }
