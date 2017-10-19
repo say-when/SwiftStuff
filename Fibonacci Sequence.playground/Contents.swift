@@ -28,6 +28,7 @@ func fibonacci(_ iterations:Int) throws {
     
     var count = 0       // Store the current iteration count
     var lastNum = 0     // The previous number value...
+    var output:String = ""
     
     // Insure we have valid input...
     if (iterations <= 0) {
@@ -35,43 +36,43 @@ func fibonacci(_ iterations:Int) throws {
     }
     
     // Use recursion with Swift's inner functions to iterate the fibonacci sequence...
+    
     func sequence(_ n:Int) throws {
-        
         count += 1   // Swift 3.0 is removing the ++ operator...
         // need to use var = var + 1
         
         // Are we done?
-        if (count == iterations) {
-            return
-        }
+        if (count == iterations) { return }
         
-        print("\(n), ", terminator:"")
+        output += "\(n), " // Add to our output...
         
         // create the new value and store 'n' as the
         // previous number for the next recursive call...
-        let result = Int.addWithOverflow(lastNum, n)  // Test the new value we're going to add, first, is it too YUGE?...
+        let result = lastNum.addingReportingOverflow(n)  // Test the new value we're going to add, first, is it too YUGE?...
         if (result.overflow) {
             throw FibError.NumberIsYUGE // Yep, it's YUGE, throw our new error...
         } else {
             // Everything is good...
-            let newVal = result.0 // A successful addition in addWithOverflow has
-            // our result in the first value of the tuple it returned...
+            let newVal = result.0 // A successful addition in addReportingOverflow has
+                                  // our result in the first value of the tuple it returned...
             lastNum = n
             try sequence(newVal)
         }
     }
     
     // '0' is a special case...
-    print("0, ", terminator:"")
+    output += "0, "
     
     // Start the sequence generation with '1'
     try sequence(1)
+    output.removeLast(2) // Drop the last ", " from the end
+    print("\(output)")
 }
 
 // Now let's try out our Fibonacci function...
 do {
     
-    try fibonacci(10)  // Try 10 iterations...(change it to a large value
+    try fibonacci(50)  // Try 50 iterations...(change it to a large value
                        // or negative value to test the error handling)
     
 } catch FibError.NumberIsYUGE {     // This is way more graceful than letting it crap out...
